@@ -60,7 +60,7 @@ export const deleteSong = async (req, res, next) => {
         $pull: { songs: song._id },
       });
     }
-    await song.findByIdAndDelete(id);
+    await Song.findByIdAndDelete(id);
     res.status(200).json({ message: "Song deleted" });
   } catch (error) {
     console.log("Error in deleteSong", error);
