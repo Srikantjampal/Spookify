@@ -4,12 +4,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useMusicStore } from "@/stores/useMusicStore";
 import { SignedIn } from "@clerk/clerk-react";
-import { HomeIcon, Library, MessageCircle } from "lucide-react";
+import { HomeIcon, MessageCircle, PlayCircle } from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const LeftSidebar = () => {
-  const { songs, albums, fetchAlbums, isLoading } = useMusicStore();
+  const { albums, fetchAlbums, isLoading } = useMusicStore();
 
   useEffect(() => {
     fetchAlbums();
@@ -17,8 +17,8 @@ const LeftSidebar = () => {
   return (
     <div className="h-full flex flex-col gap-2">
       {/* Navigation menu */}
-      <div className="rounded-lg bg-zinc-900 p-4">
-        <div className="flex space-y-2">
+      <div className="rounded-lg bg-zinc-900 p-4 ">
+        <div className="flex space-y-2 sm:flex-col ">
           <Link
             to={"/"}
             className={cn(
@@ -31,7 +31,30 @@ const LeftSidebar = () => {
             <HomeIcon className="mr-2 size-5" />
             <span className="hidden md:inline">Home</span>
           </Link>
-
+          {/* <Link
+            to={"/search"}
+            className={cn(
+              buttonVariants({
+                variant: "ghost",
+                className: "w-full justify-start text-white hover:bg-zinc-800",
+              })
+            )}
+          >
+            <SearchIcon className="mr-2 size-5" />
+            <span className="hidden md:inline">Search</span>
+          </Link>
+          <Link
+            to={"/library"}
+            className={cn(
+              buttonVariants({
+                variant: "ghost",
+                className: "w-full justify-start text-white hover:bg-zinc-800",
+              })
+            )}
+          >
+            <Library className="mr-2 size-5" />
+            <span className="hidden md:inline">Library</span>
+          </Link> */}
           <SignedIn>
             <Link
               to={"/chat"}
@@ -53,7 +76,7 @@ const LeftSidebar = () => {
       <div className="flex-1 rounded-lg bg-zinc-900 p-4 ">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center text-white px-2">
-            <Library className="size-5 mr-2" />
+            <PlayCircle className="size-5 mr-2" />
             <span className="hidden md:inline">Playlists</span>
           </div>
         </div>
