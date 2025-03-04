@@ -78,9 +78,8 @@ export const createAlbum = async (req, res, next) => {
       title,
       artist,
       imageUrl,
-      releaseDate,
+      releaseYear:releaseDate,
     });
-
     await album.save();
     res.status(201).json(album);
   } catch (error) {

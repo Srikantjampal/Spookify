@@ -13,7 +13,6 @@ interface MusicStore {
   trendingSongs: Song[];
   featuredSongs: Song[];
   stats: Stats;
-
   fetchAlbums: () => Promise<void>;
   fetchAlbumById: (id: string) => Promise<void>;
   fetchFeaturedSong: () => Promise<void>;
@@ -43,6 +42,17 @@ export const useMusicStore = create<MusicStore>((set) => ({
     totalUsers: 0,
   },
 
+  fetchStats: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axiosInstance.get("/stats")
+      set({stats:response.data});
+    } catch (error: any) {
+      set({ error: error.response.data.message });
+    } finally {
+      set({ isLoading: false });
+    }
+  },
   deleteSong: async (id) => {
     set({ isLoading: true, error: null });
     try {
@@ -62,7 +72,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
   deleteAlbum: async (id) => {
     set({ isLoading: true, error: null });
     try {
-      await axiosInstance.delete(`/admin/albums/${id}`);
+      await axiosInstance.delete(`/admin/album/${id}`);
       set((state) => ({
         albums: state.albums.filter((album) => album._id !== id),
         songs: state.songs.map((song) =>
@@ -133,24 +143,13 @@ export const useMusicStore = create<MusicStore>((set) => ({
       set({ isLoading: false });
     }
   },
-  fetchStats: async () => {
-    set({ isLoading: true, error: null });
-    try {
-      const response = await axiosInstance.get(`/stats`);
-      set({ stats: response.data });
-    } catch (error: any) {
-      set({ error: error.response.data.message });
-    } finally {
-      set({ isLoading: false });
-    }
-  },
   fetchSongs: async () => {
     set({ isLoading: true, error: null });
     try {
       const response = await axiosInstance.get(`/song`);
       set({ songs: response.data });
     } catch (error: any) {
-      set({ error: error.response.data.message });
+      set({ error: error.response?.data?.message });
     } finally {
       set({ isLoading: false });
     }

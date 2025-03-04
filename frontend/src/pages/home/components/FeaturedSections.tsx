@@ -6,7 +6,6 @@ import PlayButton from "./PlayButton";
 const FeaturedSections = () => {
 
     const {isLoading,featuredSongs,error }=useMusicStore();
-console.log("featuredSongs",featuredSongs);
     if(isLoading) return <FeaturedGridSkeleton />
 
     if(error) return <p className="text-red-500 mb-4 text-lg">{error}</p>

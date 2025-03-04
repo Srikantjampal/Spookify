@@ -14,10 +14,15 @@ import songRoutes from "./routes/song.route.js";
 import albumRoutes from "./routes/album.route.js";
 import statsRoutes from "./routes/stats.route.js";
 import { connectDB } from "./lib/db.js";
+import { createServer } from "http";
+import { initializeSocket } from "./lib/socket.js";
 
 const __dirname = path.resolve();
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+const server = createServer(app);
+initializeSocket(server);
 
 app.use(cors(
     {
@@ -49,7 +54,7 @@ app.use((err,req,res,next) => {
     res.status(500).json({message:process.env.NODE_ENV === "production" ? "Internal Server Error" : err.message});
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log("Server is running on port 5000");
     connectDB();
 });

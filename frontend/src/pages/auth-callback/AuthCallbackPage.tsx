@@ -16,6 +16,7 @@ const AuthCallbackPage = () => {
 
       try {
         syncAttempted.current = true;
+        console.log("user logging ",user)
 
         await axiosInstance.post("/auth/callback", {
           id: user.id,
